@@ -1,0 +1,16 @@
+# main dir
+-cp src 
+
+# import libs
+-lib heaps
+-lib hlsdl
+
+# output hl file. -hl out/main.c
+-hl out/main.hl
+-main Main
+
+# Try build sln file
+# -D hlgen.makefile=vs2017
+
+# Set default window size
+-D windowSize=640x640
