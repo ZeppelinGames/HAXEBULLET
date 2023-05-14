@@ -1,2 +1,2 @@
 # HAXEBULLET
- Bullet hell Haxe
+ Haxe bullet hell
