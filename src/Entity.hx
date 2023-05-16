@@ -4,11 +4,17 @@ import h2d.Anim;
 import h2d.Object;
 
 class Entity extends Object {
-	public function new(scene:Scene, ?name:String) {
-        this.name = name != null ? name : "New Entity";
+	private var sprite:Anim;
+
+	public function new(scene:Scene, ?name:String, ?parent:Object) {
+		this.name = name != null ? name : "New Entity";
 
 		trace('New entity created \'${name}\'');
-		scene.addChild(this);
+		if (parent == null) {
+			scene.addChild(this);
+		} else {
+			parent.addChild(this);
+		}
 		super();
 	}
 

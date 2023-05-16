@@ -1,5 +1,4 @@
-import h2d.Scene;
-import h2d.Layers;
+import h2d.Text;
 
 enum GameState {
 	TITLE;
@@ -9,34 +8,71 @@ enum GameState {
 }
 
 class Game extends hxd.App {
-	public final WINDOW_WIDTH = 960;
-	public final WINDOW_HEIGHT = 540;
+	public static var WINDOW_WIDTH = 320;
+	public static var WINDOW_HEIGHT = 240;
 
-	public var entities = new Array<Entity>();
+	public static var instance(get, null):Game;
 
-	private var gameState:GameState;
+	private static function get_instance():Game {
+		if (instance == null) {
+			instance = new Game();
+		}
+		return instance;
+	}
+
+	private var scenes = [
+		new Title(),
+		new MainGame()
+	];
+	private var currentScene:GameScene;
+
+	var font:h2d.Font = hxd.res.DefaultFont.get();
+	var noSceneText:Text;
 
 	override function init():Void {
 		super.init();
-
 		s2d.scaleMode = ScaleMode.LetterBox(WINDOW_WIDTH, WINDOW_HEIGHT);
-		SetGameState(GameState.TITLE);
+
+		var customGraphics = new h2d.Graphics(s2d);
+		customGraphics.beginFill(0xEA8220);
+		customGraphics.drawRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+		customGraphics.endFill();
+
+		font.resizeTo(32);
+		noSceneText = new Text(font);
+		noSceneText.text = "No scene loaded.";
+		noSceneText.textAlign = Align.Center;
+		noSceneText.setPosition(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
+
+		s2d.addChild(noSceneText);
+
+		SetSceneByIndex(1);
 	}
 
-	public function GetS2D():Scene {
-		return s2d;
+	override function update(dt:Float) {
+		currentScene.update(dt);
 	}
 
-	function SetGameState(newState:GameState) {
-		gameState = newState;
-		switch (gameState) {
-			case GameState.TITLE:
-				CreateEntity();
-			case _:
+	public function SetSceneByIndex(index:Int):Bool {
+		if (index < 0 || index >= scenes.length) {
+			return false;
 		}
+
+		currentScene = scenes[index];
+		trace("Loaded scene: " + currentScene);
+
+		currentScene.init();
+		setScene2D(currentScene);
+
+		return true;
 	}
 
-	function CreateEntity(?name:String):Entity {
-		return new Entity(s2d, name);
+	public function GetSceneIndex(scene:GameScene):Int {
+		for (i in 0...scenes.length) {
+			if (scenes[i] == scene) {
+				return i;
+			}
+		}
+		return -1;
 	}
 }

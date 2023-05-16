@@ -1,5 +1,7 @@
 # main dir
--cp src 
+-cp src
+-cp src/Scenes
+-cp src/Entities
 
 # import libs
 -lib heaps
