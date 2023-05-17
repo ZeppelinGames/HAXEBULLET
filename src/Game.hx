@@ -20,6 +20,8 @@ class Game extends hxd.App {
 		return instance;
 	}
 
+	private var inputSystem : InputSystem = InputSystem.instance;
+
 	private var scenes = [
 		new Title(),
 		new MainGame()
@@ -31,6 +33,8 @@ class Game extends hxd.App {
 
 	override function init():Void {
 		super.init();
+		hxd.Res.initLocal();
+
 		s2d.scaleMode = ScaleMode.LetterBox(WINDOW_WIDTH, WINDOW_HEIGHT);
 
 		var customGraphics = new h2d.Graphics(s2d);

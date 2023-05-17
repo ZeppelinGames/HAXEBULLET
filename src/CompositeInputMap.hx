@@ -1,3 +1,4 @@
+import hxd.Pad;
 import InputMap.InputMapType;
 import InputSystem;
 
@@ -11,15 +12,17 @@ class CompositeInputMap extends InputMap {
 		super(c, InputMapType.COMPOSITE, pos, neg);
 	}
 
-    public override function GetInput() {
-        switch (this.scheme) {
+    public override function GetInput(?pad:Pad):Float {
+
+        trace("Getting input with scheme " + scheme);
+
+        switch scheme {
             case ControlScheme.KBM:
-                return hxd.Key.isDown(posInput) ? 1 : Key.isDown(negInput) ? -1 : 0;
+                return hxd.Key.isDown(posInput) ? 1 : hxd.Key.isDown(negInput) ? -1 : 0;
             case ControlScheme.GAMEPAD:
-                return posInput;
-            case _:
-                return 0;
+                return pad != null ? pad.values[posInput] : 0;
         }
         return 0;
     }
+
 }

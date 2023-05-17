@@ -1,5 +1,5 @@
-import hxd.Key;
 import InputSystem;
+import hxd.Pad;
 
 enum InputMapType {
 	BUTTON;
@@ -21,7 +21,7 @@ class InputMap {
 		this.negInput = neg;
 	}
 
-    public function GetInput():Float {
-        return 0;
+    public function GetInput(?pad:Pad):Float {
+        return -1;
     }
 }
