@@ -13,9 +13,6 @@ class CompositeInputMap extends InputMap {
 	}
 
     public override function GetInput(?pad:Pad):Float {
-
-        trace("Getting input with scheme " + scheme);
-
         switch scheme {
             case ControlScheme.KBM:
                 return hxd.Key.isDown(posInput) ? 1 : hxd.Key.isDown(negInput) ? -1 : 0;

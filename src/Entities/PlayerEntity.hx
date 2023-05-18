@@ -1,7 +1,5 @@
 import h2d.Object;
-import hxd.Key;
 import h2d.Scene;
-import hxd.Res;
 
 class PlayerEntity extends Entity {
     private var playerSpeed = 50;
@@ -21,7 +19,6 @@ class PlayerEntity extends Entity {
         var dx : Float = InputSystem.instance.GetInput("MoveX");
         var dy : Float = InputSystem.instance.GetInput("MoveY");
 
-        this.sprite.x += dx * playerSpeed * dt;
-        this.sprite.y += -dy * playerSpeed * dt;
+        Move(dx * playerSpeed * dt, -dy * playerSpeed * dt);
     }
 }

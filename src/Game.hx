@@ -23,8 +23,8 @@ class Game extends hxd.App {
 	private var inputSystem : InputSystem = InputSystem.instance;
 
 	private var scenes = [
-		new Title(),
-		new MainGame()
+		Title.instance,
+		MainGame.instance
 	];
 	private var currentScene:GameScene;
 
